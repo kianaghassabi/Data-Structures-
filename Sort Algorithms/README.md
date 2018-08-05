@@ -2,7 +2,7 @@
 Time complexity of sort algorithms
 
 | Algorithm | Best | Average | Worst |
-| :---         |     :---:      |     :---:     |
+| --- | --- | --- | --- |
 | Quick Sort   | O(n log(n)) | O(n log(n)) | O(n^2)    |
 | Merge Sort     | O(n log(n))| O(n log(n)) | O(n log(n))|
 | Tim   | O( n )     | O(n log(n))    | O(n log(n))    |
