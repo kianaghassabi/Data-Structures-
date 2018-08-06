@@ -30,11 +30,13 @@ Also, the best case time complexity will be O(n), it is when the list is already
 
 Following are the Time and Space complexity for the Bubble Sort algorithm.
 
-    **Worst Case** Time Complexity [ Big-O ]: O(n2)
-    **Best Case** Time Complexity [Big-omega]: O(n)
-    **Average** Time Complexity [Big-theta]: O(n2)
-    **Space** Complexity: O(1)
+    Worst Case Time Complexity [ Big-O ]: O(n2)
+    Best Case Time Complexity [Big-omega]: O(n)
+    Average Time Complexity [Big-theta]: O(n2)
+    Space Complexity: O(1)
 
 ## Refrences
-    studytonight
-    codepumpkin
+
+    - [studytonight](https://www.studytonight.com/data-structures/bubble-sort)
+    - [codepumpkin](https://codepumpkin.com/bubble-sort/)
+
