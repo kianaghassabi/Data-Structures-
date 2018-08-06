@@ -20,7 +20,7 @@ In Bubble Sort, n-1 comparisons will be done in the 1st pass, n-2 in 2nd pass, n
     Sum = n(n-1)/2 
     i.e O(n^2)
 
-Hence the time complexity of Bubble Sort is O(n2).
+Hence the time complexity of Bubble Sort is O(n^2).
 
 The main advantage of Bubble Sort is the simplicity of the algorithm.
 
@@ -30,13 +30,14 @@ Also, the best case time complexity will be O(n), it is when the list is already
 
 Following are the Time and Space complexity for the Bubble Sort algorithm.
 
-    Worst Case Time Complexity [ Big-O ]: O(n2)
+    Worst Case Time Complexity [ Big-O ]: O(n^2)
     Best Case Time Complexity [Big-omega]: O(n)
-    Average Time Complexity [Big-theta]: O(n2)
+    Average Time Complexity [Big-theta]: O(n^2)
     Space Complexity: O(1)
 
 ## Refrences
 
-    - [studytonight](https://www.studytonight.com/data-structures/bubble-sort)
-    - [codepumpkin](https://codepumpkin.com/bubble-sort/)
+   -[studytonight](https://www.studytonight.com/data-structures/bubble-sort)
+   
+   -[codepumpkin](https://codepumpkin.com/bubble-sort/)
 
