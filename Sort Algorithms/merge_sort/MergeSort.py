@@ -1,7 +1,7 @@
 
 import random
 
-# fill a specefic size of array with random values
+#  a specefic sized array filled with random values
 
 
 def randomArray(sizeArray):
@@ -14,8 +14,6 @@ def randomArray(sizeArray):
 # 1  mil array with random values
 list = randomArray(1000000)
 
-# action = 0
-
 
 # def calculateAction():
 #     action = action+1
@@ -24,15 +22,15 @@ list = randomArray(1000000)
 def mergeSort(list):
     if len(list) > 1:
         # calculateAction()
-        # split array in two equal section
-        # find middle from round floor of list length
+        # split list into two equal sections
+        # find the middle from round floor of list length
         middle = len(list)//2
         left = list[0:middle]
         right = list[middle:]
         mergeSort(left)
         mergeSort(right)
         i = j = k = 0
-# when 2 spilited list have elements
+# when both spilited lists have elements to merge
         while i < len(left) and j < len(right):
             if left[i] < right[j]:
                 list[k] = left[i]
