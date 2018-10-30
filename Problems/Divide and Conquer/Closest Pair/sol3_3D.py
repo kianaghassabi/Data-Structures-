@@ -77,10 +77,10 @@ def dccp_two(sortedX, start, end):
             # for each member of strip at first we start from the lowwer bound by y 
             # and compute distance from next 6 elements
 
-            #6 is enough because we just want to look elements that 
-            # are after this so points have higher value on that specific
-            # element so its a cube and we can put 6 number of point there 
-            # so if you use more than 6 numbers, results are the same
+            # 6 is enough because we just want to look elements that 
+            # are after this, therefore, points have higher value on that specific
+            # element, plus,  it's a cube and we can put 6 number of point there 
+            # in other word if you use more than 6 numbers, results are the same
  
             if(i + 6 > len(stripSorted)):
                 counter = 0
@@ -100,8 +100,8 @@ def dccp_two(sortedX, start, end):
                     minG.y2 = stripSorted[j][1]
                     minG.z2 = stripSorted[j][2]
                     minG.min_value = minTemp
-# lots of code should be wirte there
-# if the result is zero its because  we putted a point in two side or two point in data set are the same
+
+        #having two points in the same position cause zero value in minG
         return minG
 
 def dccp_3d_two(sortedZ, sortedX, start, end):
