@@ -25,8 +25,9 @@ class minimum:
 
 
 def _distance(a=[], b=[]):
-    return (abs((((a[0]-b[0]) ** 2)+(((a[1]-b[1]) ** 2)) + ((a[2]-b[2]) ** 2))))**(1/2)
-    
+    return (((a[0]-b[0]) ** 2)+((a[1]-b[1]) ** 2) + ((a[2]-b[2]) ** 2))**(1/2)
+
+
 #find in range elements for specefic elem from given set and return a subset
 def subset_by_range(set, minRange, maxRange, elem):
     subset = []

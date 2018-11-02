@@ -8,7 +8,6 @@ from CPtool3D import _distance ,minimum
 from math import floor
 import time
 
-start = time.time()
 
 # reading file
 points = []
@@ -34,8 +33,8 @@ def dccp_3d_one(sortedX, start, end):
         for j in range(i+1, end):
             #comparing distance for each pair of nodes
             minTemp = _distance(sortedX[i], sortedX[j])
-            # we can use just < insted of <= here 
-            if (minTemp <= minG.min_value):
+            # we can use just <= insted of < here 
+            if (minTemp < minG.min_value):
                 minG.x1 = sortedX[i][0]
                 minG.y1 = sortedX[i][1]
                 minG.z1 = sortedX[i][2]
@@ -45,8 +44,9 @@ def dccp_3d_one(sortedX, start, end):
                 minG.min_value = minTemp
     return minG
 
+start = time.time()
 Answer = dccp_3d_one(DS_standard, 0, len(DS_standard))
-print("The answer is :", Answer.min_value)
-
 end = time.time()
+
+print("The answer is :", Answer.min_value)
 print( "Time:", end - start)

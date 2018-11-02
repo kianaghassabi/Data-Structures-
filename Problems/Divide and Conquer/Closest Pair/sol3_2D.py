@@ -7,7 +7,7 @@ from math import floor
 # CPtool: i put some common functions and classes which used in 2D Methods
 from CPtool import _distance , minimum , min_of_minimums , subset_by_range
 import time
-start = time.time()
+
 # minG is global min in corresponding stage
 
 # reading from file
@@ -61,29 +61,26 @@ def dccp_two(sortedX, start, end):
         upperBoundX = middle + minG.min_value
 
         # making a strip of point sorted by y
-        stripSorted = subset_by_range(sortedByY, lowwerBoundX, upperBoundX, 0)
+        strip = subset_by_range(sortedByY, lowwerBoundX, upperBoundX, 0)
         # for each member of strip at first we start from the lowwer bound by y 
         # and compute distance from next 6 elements
-        for i in range(0, len(stripSorted)):
-            if(i + 6 > len(stripSorted)):
-                upper = len(stripSorted)
-            else:
-                upper = i+6
-            for j in range(i+1, upper):
-                minTemp = _distance(stripSorted[i], stripSorted[j])
+        for i in range(0,len(strip)):
+            for j in range(i+1,len(strip)):
+                if(abs(strip[i][1]-strip[j][1]) > minG.min_value):
+                    break
+                minTemp = _distance(strip[i],strip[j])
                 if (minTemp < minG.min_value):
-                    minG.x1 = stripSorted[i][0]
-                    minG.y1 = stripSorted[i][1]
-                    minG.x2 = stripSorted[j][0]
-                    minG.y2 = stripSorted[j][1]
+                    minG.x1 = strip[i][0]
+                    minG.y1 = strip[i][1]
+                    minG.x2 = strip[j][0]
+                    minG.y2 = strip[j][1]
                     minG.min_value = minTemp
 # lots of code should be wirte there
 # if the result is zero its because  we putted a point in two side or two point in data set are the same
         return minG
 
-
+start = time.time()
 Answer = dccp_two(sortedByX, 1, len(sortedByX)-1)
-print("The answer is :", Answer.min_value)
- 
 end = time.time()
+print("The answer is :", Answer.min_value)
 print( "Time:", end - start)

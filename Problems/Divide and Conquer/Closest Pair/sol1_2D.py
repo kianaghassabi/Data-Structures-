@@ -7,7 +7,7 @@ import time
 # CPtool: i put some common functions and classes which used in 2D Methods
 from CPtool import _distance , minimum
 
-start = time.time()
+
 
 # reading from file
 points = []
@@ -19,10 +19,12 @@ DS_standard = []
 for i in range(1, len(points)):
     temp = points[i].split(" ")
     DS_standard.append([float(temp[0]), float(temp[1])])
+
+
+
 def dccp_2d_one(sortedX, start, end):
     #assign positive infinity to minG
     minG = minimum(0,0,0,0,1000) 
-
     #brute force method for each point
     for i in range (start,end):
         for j in range (i+1,end):
@@ -37,9 +39,10 @@ def dccp_2d_one(sortedX, start, end):
                 minG.min_value = minTemp
     return minG
 
-
+start = time.time()
 Answer = dccp_2d_one(DS_standard,0,len(DS_standard))
+end = time.time()
 print("The answer is :", Answer.min_value)
 
-end = time.time()
+
 print( "Time:", end - start)

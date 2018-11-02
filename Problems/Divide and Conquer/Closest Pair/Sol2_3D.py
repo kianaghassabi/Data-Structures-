@@ -1,15 +1,15 @@
 # Hosein Kangavar Nazari - IASBS 30 October 2018
-# Closest pair problem in 3D - using sparcity and binary search [ x sorted ]
-# Time Compelexity:  O(nlog^3(n)) ??
+# Closest pair problem in 3D - [ x sorted ]
+# Time Compelexity:  O(nlog^3(n))
 
 
 # CPtool: i put some common functions and classes which used in 3D Methods
-from CPtool3D import _distance , minimum , min_of_minimums , binary_search , subset_by_range
+from CPtool3D import _distance , minimum , min_of_minimums , subset_by_range
 
 from operator import itemgetter
 from math import floor
 import time
-start = time.time()
+
 
 
 # reading from file
@@ -24,17 +24,14 @@ for i in range(1, len(points)):
     temp = points[i].split(" ")
     DS_standard.append([float(temp[0]), float(temp[1]), float(temp[2])])
 
-sortedByZ = []
-sortedByX = []
-sortedByY = []
+sortedZ = []
+sortedX = []
 
-sortedByZ = sorted(DS_standard, key=itemgetter(2))
-sortedByX = sorted(DS_standard, key=itemgetter(0))
+sortedZ = sorted(DS_standard, key=itemgetter(2))
 
 #assigning a null value as first member of list 
 # [used for simpilisity in  indexing problems]
-sortedByZ.insert(0, [-10000, -10000, -10000])
-sortedByX.insert(0, [-10000, -10000, -10000])
+sortedZ.insert(0, [-10000, -10000, -10000])
 
 
 def dccp_two(sortedX, start, end):
@@ -62,38 +59,30 @@ def dccp_two(sortedX, start, end):
         # rightest member of left , leftest member of right
         middle = (sortedX[floor((end+start-1)/2)][0] +
                   sortedX[floor((end+start-1)/2)+1][0])/2
-        lowwerBoundX = middle - minG.min_value
+        lowerBoundX = middle - minG.min_value
         upperBoundX = middle + minG.min_value
 
-        # making a strip of point sorted by y value
-        leftHalfSortedX = sortedX[start:floor((end+start-1)/2)+1]
-        leftHalfSortedX = subset_by_range(leftHalfSortedX,lowwerBoundX,middle,0)
-        leftHalfSortedY = sorted(leftHalfSortedX, key=itemgetter(1))
-        rightHalfSortedX = sortedX[floor((end+start-1)/2)+1:end+1]
-        rightHalfSortedX= subset_by_range(rightHalfSortedX,middle,upperBoundX,0)
-        # for each member of strip in one side check for proper point 
-        # other side of strip by lowwer and upper bound and with help of 
-        #binary serach
-        for i in range(0,len(rightHalfSortedX)):
-            lowwerBoundY = binary_search(leftHalfSortedY, 0, len(
-                leftHalfSortedY), rightHalfSortedX[i][1]-minG.min_value,1)
-            upperBoundY = binary_search(leftHalfSortedY, 0, len(
-                leftHalfSortedY), rightHalfSortedX[i][1]+minG.min_value,1)
-            for j in range(lowwerBoundY, upperBoundY+1):
-                minTemp = _distance(rightHalfSortedX[i], leftHalfSortedY[j])
+        strip = subset_by_range(sortedX,lowerBoundX,upperBoundX,0)
+        strip = sorted(strip, key=itemgetter(1))
+        for i in range(0,len(strip)):
+            for j in range(i+1,len(strip)):
+                if(abs(strip[i][1]-strip[j][1]) > minG.min_value):
+                    break
+                minTemp = _distance(strip[i],strip[j])
+            
                 if (minTemp < minG.min_value):
-                    minG.x1 = rightHalfSortedX[i][0]
-                    minG.y1 = rightHalfSortedX[i][1]
-                    minG.z1 = rightHalfSortedX[i][2]
-                    minG.x2 = leftHalfSortedY[j][0]
-                    minG.y2 = leftHalfSortedY[j][1]
-                    minG.z2 = leftHalfSortedY[j][2]
+                    minG.x1 = strip[i][0]
+                    minG.y1 = strip[i][1]
+                    minG.z1 = strip[i][2]
+                    minG.x2 = strip[j][0]
+                    minG.y2 = strip[j][1]
+                    minG.z2 = strip[j][2]
                     minG.min_value = minTemp
         # if the result is zero its because  we putted a point in two side or two point in data set are the same
         return minG
 
 
-def dccp_3d_two(sortedZ, sortedX, start, end):
+def dccp_3d_two(start, end):
     # assign positive infinity to minG
     minG = minimum(0, 0, 0, 0, 0, 0, 10000000)
     #if there is less than 4 point use brute force 
@@ -112,21 +101,21 @@ def dccp_3d_two(sortedZ, sortedX, start, end):
         return minG
 
     else:
-        minL = dccp_3d_two(sortedZ, sortedX, start, floor((end+start-1)/2))
-        minR = dccp_3d_two(sortedZ, sortedX, floor((end+start-1)/2)+1, end)
+        minL = dccp_3d_two(start, floor((end+start-1)/2))
+        minR = dccp_3d_two(floor((end+start-1)/2)+1, end)
         minG = min_of_minimums(minL, minR)
 
         middle = (sortedZ[floor((end+start-1)/2)][2] +
                   sortedZ[floor((end+start-1)/2)+1][2])/2
-        lowwerBoundZ = middle - minG.min_value
+        lowerBoundZ = middle - minG.min_value
         upperBoundZ = middle + minG.min_value
 
         # here we should find point in this strip
-        strip3D = subset_by_range(sortedX, lowwerBoundZ, upperBoundZ, 2)
+        strip3D = subset_by_range(sortedZ[start:end], lowerBoundZ, upperBoundZ, 2)
         #assigning a null value as first member of list 
         # [used for simpilisity in  indexing problems]
+        strip3D=sorted(strip3D,key=itemgetter(0))
         strip3D.insert(0, [-10000, -10000, -10000])
-
         minTemp = dccp_two(strip3D, 1, len(strip3D)-1)
 
         if (minTemp.min_value <= minG.min_value):
@@ -138,9 +127,9 @@ def dccp_3d_two(sortedZ, sortedX, start, end):
             minG.z2 = minTemp.z2
             minG.min_value = minTemp.min_value
         return minG
-
-Answer = dccp_3d_two(sortedByZ, sortedByX, 1, len(sortedByZ))
-print("The answer is :", Answer.min_value)
-
+start = time.time()
+Answer = dccp_3d_two( 1, len(sortedZ))
 end = time.time()
+
+print("The answer is :", Answer.min_value)
 print("Time:", end - start)

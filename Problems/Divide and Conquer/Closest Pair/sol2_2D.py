@@ -1,5 +1,5 @@
 # Hosein Kangavar Nazari - IASBS 30 October 2018
-# Closest pair problem in 2D - using sparcity and binary search [ x sorted ]
+# Closest pair problem in 2D -  [ x sorted ]
 # Time Compelexity:  O(nlog^2(n))
 
 
@@ -9,7 +9,7 @@ from CPtool import _distance , minimum , min_of_minimums , binary_search , subse
 from operator import itemgetter
 from math import floor
 import time
-start = time.time()
+
 
 # reading from file
 points = []
@@ -30,6 +30,8 @@ sortedByX = sorted(DS_standard, key=itemgetter(0))
 #assigning a null value as first member of list 
 # [used for simpilisity in  indexing problems]
 sortedByX.insert(0,[-10000,-10000])
+
+
 
 def dccp_two(sortedX, start, end):
     #assign positive infinity to minG
@@ -54,37 +56,31 @@ def dccp_two(sortedX, start, end):
 
         #rightest member of left , leftest member of right
         middle = (sortedX[floor((end+start-1)/2)][0] + sortedX[floor((end+start-1)/2)+1][0])/2
-        lowwerBoundX = middle - minG.min_value
+        lowerBoundX = middle - minG.min_value
         upperBoundX = middle + minG.min_value
         # floor or ceil for halfsorted, that the question
-        leftHalfSortedX = sortedX[start:floor((end+start-1)/2)+1]
-        leftHalfSortedX = subset_by_range(leftHalfSortedX,lowwerBoundX,middle,0)
-        leftHalfSortedY = sorted(leftHalfSortedX, key=itemgetter(1))
-        rightHalfSortedX = sortedX[floor((end+start-1)/2)+1:end+1]
-        rightHalfSortedX= subset_by_range(rightHalfSortedX,middle,upperBoundX,0)
-        # for each member of strip in one side check for proper point 
-        # other side of strip by lowwer and upper bound and with help of 
-        #binary serach
-        for i in range(0,len(rightHalfSortedX)):
-            lowwerBoundY = binary_search(leftHalfSortedY, 0, len(
-                leftHalfSortedY), rightHalfSortedX[i][1]-minG.min_value,1)
-            upperBoundY = binary_search(leftHalfSortedY, 0, len(
-                leftHalfSortedY), rightHalfSortedX[i][1]+minG.min_value,1)
-            for j in range(lowwerBoundY, upperBoundY+1):
-                minTemp = _distance(rightHalfSortedX[i], leftHalfSortedY[j])
+        strip = subset_by_range(sortedX,lowerBoundX,upperBoundX,0)
+        strip = sorted(strip, key=itemgetter(1))
+        for i in range(0,len(strip)):
+            for j in range(i+1,len(strip)):
+                if(abs(strip[i][1]-strip[j][1]) > minG.min_value):
+                    break
+                minTemp = _distance(strip[i],strip[j])
                 if (minTemp < minG.min_value):
-                    minG.x1 = rightHalfSortedX[i][0]
-                    minG.y1 = rightHalfSortedX[i][1]
-                    minG.x2 = leftHalfSortedY[j][0]
-                    minG.y2 = leftHalfSortedY[j][1]
+                    minG.x1 = strip[i][0]
+                    minG.y1 = strip[i][1]
+                    minG.x2 = strip[j][0]
+                    minG.y2 = strip[j][1]
                     minG.min_value = minTemp
         # if the result is zero its because  we putted a point in two side or two point in data set are the same
         return minG
  
 
-
+start = time.time()
 Answer = dccp_two(sortedByX,1,len(sortedByX)-1)
+end = time.time()
+
 print("The answer is :", Answer.min_value)
 
-end = time.time()
+
 print( "Time:", end - start)
